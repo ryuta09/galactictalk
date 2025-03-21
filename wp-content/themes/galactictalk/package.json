@@ -1,7 +1,6 @@
 {
   "name": "bathe",
-  "version": "3.0.2",
-  "description": "The simplest WordPress starter theme including full setup for Tailwind CSS, Sass, PostCSS, Autoprefixer, Vite, TypeScript, Browsersync, imagemin, Prettier, stylelint, ESLint.",
+  "version": "1.0.0",
   "browserslist": [
     "> 1%",
     "last 2 versions",
@@ -9,7 +8,7 @@
   ],
   "config": {
     "browsersync": {
-      "proxy": "http://localhost:8888",
+      "proxy": "https://galactictalk.local",
       "port": 3000
     },
     "image": {
@@ -32,21 +31,18 @@
     }
   },
   "scripts": {
-    "dev": "npm-run-all -p imagemin css -p browser watch",
-    "browser": "cross-conf-env browser-sync \"$npm_package_config_browsersync_proxy\" -f \"**/*.php\" \"$npm_package_config_css_dist\" \"$npm_package_config_js_output\" \"$npm_package_config_image_dist\" --port $npm_package_config_browsersync_port",
-    "build": "run-p imagemin css vite",
-    "css": "run-p sass tailwind",
+    "dev": "concurrently npm:imagemin npm:css && concurrently npm:browser npm:watch",
+    "browser": "cross-conf-env browser-sync \"$npm_package_config_browsersync_proxy\" -f \"**/*.php\" \"$npm_package_config_js_output\" \"$npm_package_config_image_dist\" --port $npm_package_config_browsersync_port",
+    "clean": "rm -rf $npm_package_config_image_dist $npm_package_config_js_output $npm_package_config_tailwind_dist",
+    "build": "npm run clean && concurrently npm:imagemin npm:css npm:vite",
+    "css": "concurrently npm:tailwind",
     "imagemin": "cross-conf-env node imagemin.mjs \"$npm_package_config_image_src/**/*\" $npm_package_config_image_dist",
-    "presass": "cross-conf-env stylelint \"$npm_package_config_css_src/**/*\" --fix",
-    "sass": "cross-conf-env sass $npm_package_config_css_src:$npm_package_config_css_dist --style=compressed",
-    "postsass": "cross-conf-env postcss $npm_package_config_css_dist/*.css --use=autoprefixer --dir=$npm_package_config_css_dist $npm_package_config_css_map",
-    "tailwind": "cross-conf-env tailwindcss -i $npm_package_config_tailwind_src -o $npm_package_config_tailwind_dist --minify",
+    "tailwind": "cross-conf-env postcss $npm_package_config_tailwind_src -d $npm_package_config_tailwind_dist",
     "vite": "vite build",
     "watch:imagemin": "cross-conf-env onchange \"$npm_package_config_image_src/**/*\" -e \".DS_Store\" -- npm run imagemin",
-    "watch:sass": "cross-conf-env onchange \"$npm_package_config_css_src/**/*\" -e \".DS_Store\" -- npm run sass",
     "watch:tailwind": "npm run tailwind -- --watch",
     "watch:vite": "npm run vite -- --watch --mode development",
-    "watch": "run-p watch:*"
+    "watch": "concurrently npm:watch:*"
   },
   "repository": {
     "type": "git",
@@ -63,12 +59,9 @@
     "stylelint",
     "ESLint"
   ],
-  "author": "Kite",
-  "license": "GPL-2.0+",
-  "bugs": {
-    "url": "https://github.com/wp-bathe/bathe/issues"
-  },
-  "homepage": "https://github.com/wp-bathe/bathe",
+  "author": "KITERETZ inc.",
+  "private": true,
+  "license": "UNLICENSED",
   "engines": {
     "node": ">= 18.16",
     "npm": ">= 9.5"
@@ -81,6 +74,7 @@
     "@typescript-eslint/parser": "^5.60.0",
     "autoprefixer": "^10.4.14",
     "browser-sync": "^3.0.2",
+    "concurrently": "^9.1.2",
     "cross-conf-env": "^1.3.0",
     "eslint": "^8.43.0",
     "eslint-plugin-tailwindcss": "^3.12.1",
