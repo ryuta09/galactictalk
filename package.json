@@ -1,0 +1,34 @@
+{
+  "name": "galactictalk",
+  "version": "0.0.4",
+  "scripts": {
+    "dev": "pnpm -r --workspace-concurrency Infinity dev",
+    "build": "pnpm -r --workspace-concurrency Infinity build",
+    "theme": "pnpm -F galactictalk-theme",
+    "plugin": "pnpm -F galactictalk-plugin",
+    "version": "replace-in-files --regex='(Version:\\s*?)\\d+\\.\\d+\\.\\d+(\\-rc\\.\\d+)?' --replacement='$1'$npm_package_version 'wp-content/themes/galactictalk/style.css'",
+    "prod:local:db": "source .env.local && wp @prod db export - | wp db import - && wp search-replace $PROD_DOMAIN $LOCAL_DOMAIN --all-tables --report-changed-only && wp plugin activate show-current-template --network",
+    "prod:local:uploads": "source .env.local && rsync -ahuvz $PROD_UPLOADS/ $LOCAL_UPLOADS/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kiteretz/galactictalk.git"
+  },
+  "packageManager": "pnpm@9.1.0",
+  "engines": {
+    "node": ">=20.13",
+    "npm": "Please use pnpm!",
+    "yarn": "Please use pnpm!",
+    "pnpm": ">=9.1.0"
+  },
+  "author": "KITERETZ inc.",
+  "private": true,
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/kiteretz/galactictalk.git/issues"
+  },
+  "homepage": "https://github.com/kiteretz/galactictalk.git#readme",
+  "dependencies": {
+    "replace-in-files-cli": "^2.2.0"
+  }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ruleset name="Galactic Talk WordPress">
+    <rule ref="WordPress">
+        <exclude name="Universal.Operators.DisallowShortTernary" />
+        <exclude name="WordPress.WP.EnqueuedResourceParameters.MissingVersion" />
+    </rule>
+</ruleset>
