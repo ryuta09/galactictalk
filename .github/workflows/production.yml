@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+name: Deploy production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Import ssh key
+        run: echo "$SSH_KEY" > key && chmod 600 key
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+
+      - name: SSH & git pull
+        run: >
+          ssh -i key -p $PRODUCTION_PORT -o StrictHostKeyChecking=no
+          $PRODUCTION_USER@$PRODUCTION_HOST
+          "cd $PRODUCTION_PATH && git checkout main && git pull"
+        env:
+          PRODUCTION_USER: ${{ secrets.PRODUCTION_USER }}
+          PRODUCTION_HOST: ${{ secrets.PRODUCTION_HOST }}
+          PRODUCTION_PATH: ${{ secrets.PRODUCTION_PATH }}
+          PRODUCTION_PORT: ${{ secrets.PRODUCTION_PORT }}
