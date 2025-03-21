@@ -1,0 +1,42 @@
+.env.local
+
+# WP CLI
+wp-cli.local.yml
+
+# Local
+/local-xdebuginfo.php
+
+# Server
+/.user.ini
+
+#Apache
+.htaccess
+.htpasswd
+
+# PHP
+/vendor/
+
+# Wordpress
+wp-config.php
+wp-content/uploads/
+wp-content/plugins/show-current-template/
+wp-content/language/plugins/show-current-template*
+*/sql
+/readme.html
+
+# Node.js
+node_modules/
+
+#Logfiles and tempfiles
+*.Log
+/log/*
+!/log/.keep
+/tmp
+
+# Other unneeded files
+*.swp
+*~
+.project
+.DS_Store
+.idea
+.secret
