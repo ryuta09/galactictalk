@@ -1,0 +1,6 @@
+@import 'tailwindcss/base';
+@import '0.base/front';
+@import '1.blocks/front';
+@import 'tailwindcss/components';
+@import '2.components';
+@import 'tailwindcss/utilities';

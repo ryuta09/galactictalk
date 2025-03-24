@@ -1,0 +1,11 @@
+#menu-header {
+	@apply flex gap-8;
+
+	> .menu-item {
+		@apply font-black;
+
+		> a {
+			@apply block py-4 px-8;
+		}
+	}
+}

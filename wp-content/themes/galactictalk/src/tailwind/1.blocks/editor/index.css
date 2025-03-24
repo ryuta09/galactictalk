@@ -1,0 +1,5 @@
+@import '..';
+
+.editor-styles-wrapper {
+	@apply bg-black text-white;
+}

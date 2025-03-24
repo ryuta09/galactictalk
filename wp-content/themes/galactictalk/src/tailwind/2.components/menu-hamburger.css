@@ -1,0 +1,11 @@
+#menu-hamburger {
+	@apply absolute right-16 top-64 grid w-fit gap-4 rounded-8 bg-black/50 p-20 leading-normal shadow backdrop-blur-[1.25rem];
+
+	> .menu-item {
+		@apply font-black;
+
+		> a {
+			@apply block p-4;
+		}
+	}
+}

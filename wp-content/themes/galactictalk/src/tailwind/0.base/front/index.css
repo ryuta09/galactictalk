@@ -1,0 +1,5 @@
+@import '..';
+
+html {
+	@apply scroll-pt-[calc(var(--header-height)+2rem)];
+}

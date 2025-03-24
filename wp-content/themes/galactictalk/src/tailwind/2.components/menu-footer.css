@@ -1,0 +1,11 @@
+#menu-footer {
+	@apply -mx-4 grid gap-12 text-15 leading-none lg:text-16;
+
+	> .menu-item {
+		@apply font-black;
+
+		> a {
+			@apply inline-block p-4;
+		}
+	}
+}

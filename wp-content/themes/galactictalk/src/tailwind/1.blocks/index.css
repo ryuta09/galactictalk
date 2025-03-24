@@ -1,0 +1,204 @@
+/**
+ * Common block styles
+ */
+ .editor-styles-wrapper {
+	/**
+	 * Base
+	 */
+	@apply antialiased font-sans ~text-15/16 leading-relaxed;
+
+	:where(body .is-layout-constrained),
+	:where(body .is-layout-flow) {
+		> * {
+			@apply mt-[--wp--style--block-gap] mb-0;
+		}
+	}
+
+	.block-editor-block-list__layout.is-root-container {
+		@apply px-gutter py-gutter-2;
+
+		> :where(.alignfull) {
+			@apply -mx-gutter;
+		}
+
+		> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+			@apply max-w-[--wp--style--global--content-size] mx-auto;
+		}
+	}
+
+	/**
+	 * Blocks
+	 */
+
+	/**
+	 * While specificity 0-1-0 works fine on the front-end,
+	 * it gets overridden by 0-2-0 in the editor, so setting it to 0-2-1
+	 */
+
+	.has-background:not(_) {
+		&:where(.wp-block-group, .wp-block-columns, .wp-block-column) {
+			@apply ~p-16/24;
+		}
+	}
+
+	:not(.has-background):not(_):where(.has-global-padding) {
+		&:where(.wp-block-group) {
+			@apply px-0;
+
+			/* While specificity 0-2-0 works fine on the front-end,
+			 * it gets overridden by 0-3-0 in the editor, so setting it to 0-3-1
+			 */
+			> .alignfull {
+				@apply mx-0;
+			}
+		}
+	}
+
+	/**
+	 * Unify specificity to 0-1-0:
+	 * Since `.editor-styles-wrapper` (0-1-0) is applied, use `:where()` for all contents.
+	 */
+
+	:where(.has-background) {
+		&:where(.wp-block-group, .wp-block-columns, .wp-block-column) {
+			&:where(:not(.alignfull)) {
+				@apply ~rounded-12/16;
+			}
+
+			:where(.has-background) {
+				@apply rounded-4;
+			}
+		}
+	}
+
+	:where(h1, h2, h3, h4, h5, h6) {
+		@apply font-bold;
+	}
+
+	:where(h1) {
+		@apply ~text-48/64 leading-none font-palt;
+	}
+
+	:where(h2) {
+		@apply grid gap-16 leading-none ~text-48/64 font-barlow font-palt
+			before:block before:w-40 before:h-6 before:rounded-full before:bg-brand-500;
+
+		&:where(
+		:not(h1 + h2):not(h2 + h2):not(h3 + h2):not(h4 + h2):not(
+			h5 + h2
+		):not(h6 + h2)
+	) {
+			@apply mt-[1em];
+		}
+	}
+
+	:where(h3) {
+		@apply grid grid-cols-[auto_1fr] gap-16 leading-normal ~text-24/32 font-barlow font-palt
+			before:block before:w-6 before:h-full before:rounded-full before:bg-brand-500;
+
+		&:where(
+		:not(h1 + h3):not(h2 + h3):not(h3 + h3):not(h4 + h3):not(
+			h5 + h3
+		):not(h6 + h3)
+	) {
+			@apply mt-[0.625em]
+		}
+	}
+
+	:where(h2, h3, h4, h5, h6) {
+		&.is-style-only-text {
+			@apply before:hidden;
+		}
+	}
+
+	:where(
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	li,
+	dl,
+	table,
+	figcaption,
+	blockquote,
+	pre,
+	label,
+	details
+) {
+		:where(a) {
+			@apply text-brand-400 underline;
+
+			&:hover {
+				@apply no-underline;
+			}
+		}
+	}
+
+	:where(hr) {
+		@apply border-t border-t-brand-700 my-gutter-2;
+	}
+
+	:where(ol),
+	:where(ul) {
+		@apply pl-[1.5em] marker:text-brand-500 marker:font-semibold;
+
+		:where(ol),
+		:where(ul) {
+			@apply marker:text-neutral-600;
+		}
+	}
+
+	:where(ol) {
+		@apply list-decimal;
+	}
+
+	:where(ul) {
+		@apply list-disc;
+	}
+
+	:where(table) {
+		:where(th) {
+			@apply bg-brand-600;
+		}
+
+		thead {
+			@apply border-b-0
+		}
+
+		th,
+		td {
+			@apply border-px border-brand-600;
+		}
+	}
+
+	:where(.wp-block-button__link):not(_) {
+		@apply flex min-w-320 items-center justify-between gap-16 rounded-full bg-brand-600 font-bold leading-relaxed text-white ~px-20/32 ~py-12/16 font-palt;
+
+		/* &::after {
+			content: '';
+			@apply icon-chevron-right transition ease-out size-16;
+		} */
+	}
+
+	.is-style-outline .wp-block-button__link {
+		@apply flex min-w-320 items-center justify-between gap-16 rounded-full bg-transparent font-bold leading-relaxed ~px-20/32 ~py-12/16 font-palt border border-brand-400 text-brand-400;
+	}
+
+	:where(.wp-block-image) {
+		&.size-full {
+			width: unset;
+			height: unset;
+		}
+
+		figcaption {
+			@apply mb-0 text-center text-neutral-500;
+		}
+	}
+
+	:where(.wp-embed-aspect-16-9 iframe) {
+		@apply aspect-video h-auto;
+	}
+}
